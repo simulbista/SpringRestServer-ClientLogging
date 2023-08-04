@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.humber.eap.client.StudentServiceClient;
 import com.humber.eap.models.Course;
 import com.humber.eap.models.Student;
 import com.humber.eap.repositories.CourseRepository;
@@ -18,6 +19,9 @@ public class StudentRestServerApplication implements CommandLineRunner {
 
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private StudentServiceClient studentServiceClient;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentRestServerApplication.class, args);
@@ -57,6 +61,12 @@ public class StudentRestServerApplication implements CommandLineRunner {
 				.course(Course.builder().courseName("AI & ML").creditHours(2).build()).build());
 		studentRepository.save(Student.builder().roll(856).s_name("Palash").age(28)
 				.course(Course.builder().courseName("DSA").creditHours(3).build()).build());
+		
+		
+		//run the client to call the APIs and run the logger
+		//there might be posssibility that the client may be trying to access the APIs which are not available yet (spring is initialing it, so keeping a bit of delay)
+		Thread.sleep(5000);
+		studentServiceClient.callApiRunLogger();
 
 	}
 

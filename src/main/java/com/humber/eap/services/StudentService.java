@@ -62,6 +62,7 @@ public class StudentService {
 	// update a student
 	public Student updateStudent(Student student) throws Exception {
 		boolean isExist = studentRepository.findAll().stream().anyMatch((s) -> s.getId() == student.getId());
+		System.out.println("in api");
 		if (!isExist)
 			throw new Exception("The student with id " + student.getId() + " doesn't exist!");
 		return studentRepository.save(student);
